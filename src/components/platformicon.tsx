@@ -27,7 +27,7 @@ const Platformicon=({platforms}:Props)=>
         
         <div className="d-flex flex-wrap">
         {platforms.map(platform=>{const Icn=iconMap[platform.slug];
-        return <div className="ms-3"><Icn/></div>})}
+        return <div className="me-3"><Icn/></div>})}
         </div>
         </>
     );

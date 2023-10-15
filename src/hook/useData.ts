@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react"
 import apiClient from "../services/api-client";
 import React from "react";
+export interface Genre
+{
+    id:number;
+    name:string;
+    slug:string;
+}
 export interface platform
 {
     id:number;
     name:string;
     slug:string;
 }
-
 export interface Game
 {
     id:number;
@@ -16,20 +21,20 @@ export interface Game
     parent_platforms:{platform:platform}[];
     metacritic:number;
 }
-interface FetchGamesResponse
+interface FetchResponse<T>
 {
     count:number;
-    results:Game[];
+    results:T[];
 }
-const useGame=()=>{
-    const [games,setgames]=useState<Game[]>([]);
+const useData=<T>(endpoint:string)=>{
+    const [datas,setdatas]=useState<T[]>([]);
     const [error,setError]=useState("");
     useEffect(()=>{
         apiClient
-        .get<FetchGamesResponse>("/games")
-        .then(res=> setgames(res.data.results))
+        .get<FetchResponse<T>>(endpoint)
+        .then(res=> setdatas(res.data.results))
         .catch(err=>setError(err.message));
     },[]);
-    return {games,error};
+    return {datas,error};
 }
-export default useGame
+export default useData
