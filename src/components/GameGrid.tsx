@@ -1,32 +1,18 @@
 import { useEffect, useState } from "react"
 import apiClient from "../services/api-client";
 import React from "react";
+import useGame from "../hook/useGame";
+import GameCard from "./GameCard";
+import './GameCard.css'
 
-interface Game
-{
-    id:number;
-    name:string
-}
-interface FetchGamesResponse
-{
-    count:number;
-    results:Game[];
-}
 const GameGrid=()=>{
-    const [games,setgames]=useState<Game[]>([]);
-    const [error,setError]=useState("");
-    useEffect(()=>{
-        apiClient
-        .get<FetchGamesResponse>("/games")
-        .then(res=> setgames(res.data.results))
-        .catch(err=>setError(err.message));
-    });
+    const {games,error}=useGame();
     return(
         <>
         {error && <p className="text-danger">{error}</p>}
-        <ul>
-        {games.map(game=><li key={game.id}>{game.name}</li>)}
-        </ul>
+        <div className="d-flex flex-wrap">
+        {games.map(game=>(<GameCard key={game.id} game={game}></GameCard>))}
+        </div>
         </>
     )
 }
