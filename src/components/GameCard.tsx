@@ -1,4 +1,4 @@
-import { Game } from "../hook/useGame";
+import { Game } from "../hook/useGaming";
 import './GameCard.css'
 import Platformicon from "./platformicon";
 import CriticScore from "./CriticScore";
@@ -7,6 +7,7 @@ interface Props {
     game: Game;
 }
 const GameCard = ({ game }: Props) => {
+    console.log(game.name)
     return (
         <>
             <div className="card mb-3 col-3 me-6">

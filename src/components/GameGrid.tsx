@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
-import apiClient from "../services/api-client";
-import React from "react";
-import useGame from "../hook/useGame";
 import GameCard from "./GameCard";
 import './GameCard.css'
-import useData,{Game} from "../hook/useData";
-
-const GameGrid=()=>{
-    const {datas,error}=useData<Game>('/games');
+import useData,{Genre} from "../hook/useData";
+import useGames,{Game, platform} from "../hook/useGames";
+import { GameQuery } from "../App";
+interface Props{
+    gameQuery:GameQuery
+    
+}
+const GameGrid=({gameQuery}:Props)=>{
+    const {data,error}=useGames(gameQuery);
+    if(error) return(<p className="text-danger">{error.message}</p>)
     return(
         <>
-        {error && <p className="text-danger">{error}</p>}
+        
+        <h1>{gameQuery.genre?.name}  {gameQuery.plat?.name} Games</h1>
         <div className="d-flex flex-wrap">
-        {datas.map(game=>(<GameCard key={game.id} game={game}></GameCard>))}
+        {data?.map(game=>(<GameCard key={game.id} game={game}></GameCard>))}
         </div>
         </>
     )
