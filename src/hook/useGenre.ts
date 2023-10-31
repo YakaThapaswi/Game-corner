@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import apiClient from "../services/api-client";
+import APIClient from "../services/api-client";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import gendata from "./genredata";
@@ -15,15 +15,14 @@ interface FetchGenresResponse
     count:number;
     results:Genre[];
 }
+const apiClient=new APIClient<Genre>("/genres")
 const useGenre=()=>
     
     useQuery<Genre[],Error>({
         
         queryKey:['count','genre'],
-        queryFn:()=>
-            apiClient
-            .get<FetchGenresResponse>("/genres")
-            .then(res=>res.data.results),
+        queryFn:
+            apiClient.getAll,
         initialData:gendata
         
     })

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import apiClient from "../services/api-client";
+import APIClient from "../services/api-client";
 import React from "react";
 import { AxiosRequestConfig } from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { platform } from "./useGames";
 export interface Genre
 {
     id:number;
@@ -11,20 +13,15 @@ export interface Genre
 
 }
 
-interface FetchResponse<T>
-{
-    count:number;
-    results:T[];
-}
-const useData=<T>(endpoint:string,requestConfig?:AxiosRequestConfig,deps?:any[])=>{
-    const [datas,setdatas]=useState<T[]>([]);
-    const [error,setError]=useState("");
-    useEffect(()=>{
-        apiClient
-        .get<FetchResponse<T>>(endpoint,{...requestConfig})
-        .then(res=> setdatas(res.data.results))
-        .catch(err=>setError(err.message));
-    },deps?[...deps]:[]);
-    return {datas,error};
+
+
+const useData=<T>(ikey:string,endpoint:string,requestConfig?:AxiosRequestConfig,deps?:any[])=>{
+   
+    const apiClient=new APIClient<T>(endpoint)
+    return useQuery<T[],Error>({
+        queryKey:[ikey],
+        queryFn:
+            apiClient.getAll
+    })
 }
 export default useData

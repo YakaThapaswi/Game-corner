@@ -5,7 +5,8 @@ interface Props{
     onplatform:platform|null
 }
 const Platformfilter = ({selectedPlatform,onplatform}:Props) => {
-    const {datas,error}=useData<platform>('/platforms/lists/parents')
+    const {data,error}=useData<platform>('platforms','/platforms/lists/parents')
+    if(error) return(<p className="text-danger">{error.message}</p>)
     return (
         <>
             <div className="dropdown mb-3 me-4" >
@@ -13,7 +14,7 @@ const Platformfilter = ({selectedPlatform,onplatform}:Props) => {
                     {onplatform?.name||'platforms'}
                 </button>
                 <ul className="dropdown-menu">
-                    {datas.map((plat)=><li key={plat.id} onClick={()=>selectedPlatform(plat)}><p >{plat.name}</p></li>)}
+                    {data?.map((plat)=><li key={plat.id} onClick={()=>selectedPlatform(plat)}><p >{plat.name}</p></li>)}
                 </ul>
             </div>
         </>
