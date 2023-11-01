@@ -5,9 +5,9 @@ import './App.css'
 import GenreList from './components/GenreList'
 import Navbar from './components/Navbar';
 import GameGrid from './components/GameGrid';
-import useData,{ Genre } from './hook/useData'
+import { Genre } from './hook/useGenre';
 import Platformfilter from './components/Platformfilter'
-import { platform,Game } from './hook/useGames'
+import { platform} from './hook/useGames'
 import Sort from './components/Sort'
 export interface GameQuery{
   genre:Genre|null
@@ -16,7 +16,7 @@ export interface GameQuery{
   search:string
 }
 function App() {
-  const [count, setCount] = useState(0)
+  
   
   const [gameQuery,setgameQuery]=useState<GameQuery>({} as GameQuery)
   console.log(gameQuery.search)

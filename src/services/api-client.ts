@@ -5,9 +5,10 @@ const axiosInstance=axios.create({
         key:'df67b66b1b364142b0c73420ccf946fb'
     }
 })
-interface FetchResponse<T>
+export interface FetchResponse<T>
 {
     count:number;
+    next:string|null;
     results:T[];
 }
 class APIClient<T>{
@@ -18,7 +19,7 @@ class APIClient<T>{
     }
     getAll=(config:AxiosRequestConfig)=>{
         return axiosInstance.get<FetchResponse<T>>(this.endpoint,config)
-        .then(res=>res.data.results)
+        .then(res=>res.data)
     }
 }
 export { CanceledError};

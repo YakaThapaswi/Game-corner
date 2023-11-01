@@ -14,7 +14,7 @@ const Platformfilter = ({selectedPlatform,onplatform}:Props) => {
                     {onplatform?.name||'platforms'}
                 </button>
                 <ul className="dropdown-menu">
-                    {data?.map((plat)=><li key={plat.id} onClick={()=>selectedPlatform(plat)}><p >{plat.name}</p></li>)}
+                    {data?.results.map((plat)=><li key={plat.id} onClick={()=>selectedPlatform(plat)}><p >{plat.name}</p></li>)}
                 </ul>
             </div>
         </>

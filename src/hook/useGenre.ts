@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import APIClient from "../services/api-client";
-import React from "react";
+
+import APIClient, { FetchResponse } from "../services/api-client";
+
 import { useQuery } from "@tanstack/react-query";
 import gendata from "./genredata";
 export interface Genre
@@ -10,20 +10,13 @@ export interface Genre
     slug:string;
     image_background:string
 }
-interface FetchGenresResponse
-{
-    count:number;
-    results:Genre[];
-}
 const apiClient=new APIClient<Genre>("/genres")
 const useGenre=()=>
     
-    useQuery<Genre[],Error>({
+    useQuery<FetchResponse<Genre>,Error>({
         
-        queryKey:['count','genre'],
-        queryFn:
-            apiClient.getAll,
-        initialData:gendata
+        queryKey:['genre'],
+        queryFn:apiClient.getAll,
         
     })
    
